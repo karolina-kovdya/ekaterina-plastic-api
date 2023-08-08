@@ -1,17 +1,21 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const User = require('../models/user')
 const BadRequestError = require('../errors/badRequest_error');
 const UnauthorizedError = require('../errors/unauthorized_error');
 const { BAD_REQUEST, CREATED, BAD_EMAIL_PASSWORD } = require('../utils/constants')
 
-const { NODE_ENV, JWT_SECRET, EMAIL, PASSWORD } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
-const createUser = () => {
+const createUser = (req, res, next) => {
+  const {username, password} = req.body
 
-  bcrypt.hash(PASSWORD, 10)
+  bcrypt.hash(password, 10)
     .then((hash) => User.create({
-      EMAIL, PASSWORD: hash,
+      username, password: hash,
     })
       .then((user) => res.status(CREATED).send({
-        email: user.email,
+        user: user.username,
       }))
       .catch((err) => {
         if (err.name === 'ValidationError') {
@@ -26,8 +30,8 @@ const createUser = () => {
 };
 
 const loginUser = (req, res, next) => {
-  const { email, password } = req.body;
-  User.findOne({ email }).select('+password')
+  const { username, password } = req.body;
+  User.findOne({ username }).select('+password')
     .orFail(() => {
       throw new UnauthorizedError((BAD_EMAIL_PASSWORD));
     })
