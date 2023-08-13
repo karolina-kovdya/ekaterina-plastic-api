@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user')
 const BadRequestError = require('../errors/badRequest_error');
 const UnauthorizedError = require('../errors/unauthorized_error');
-const NotFoundError = require('../errors/notFound_error')
 const { BAD_REQUEST, CREATED, BAD_EMAIL_PASSWORD } = require('../utils/constants')
 
 const { NODE_ENV, JWT_SECRET } = process.env;

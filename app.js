@@ -2,14 +2,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors')
 const helmet = require('helmet')
-const routes = require('./routes/user');
+const userRoutes = require('./routes/user');
+const sectionRoutes = require('./routes/section');
+const NotFoundError = require('./errors/notFound_error');
 
 const app = express();
 
 app.use(express.json());
 app.use(helmet());
-app.use(cors())
-app.use(routes)
+app.use(cors());
+app.use('/', userRoutes);
+app.use('/', sectionRoutes);
+app.use((req, res, next) => {
+  next(new NotFoundError('Страница не найдена'));
+});
+
 
 const { PORT = 3001 } = process.env;
 
