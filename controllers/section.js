@@ -16,6 +16,12 @@ const createdSection = (req, res, next) => {
     });
 };
 
+const getSections = (req, res, next) => {
+  Section.find({}).sort({ createdAt: -1 })
+    .then((sections) => res.send(sections))
+    .catch((err) => next(err));
+};
+
 module.exports = {
-  createdSection
+  createdSection, getSections
 }
