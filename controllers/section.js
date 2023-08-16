@@ -1,5 +1,5 @@
 const Section = require('../models/section')
-const { CREATED } = require('../utils/constants')
+const { CREATED, SECTION_NOT_FOUND, BAD_REQUEST } = require('../utils/constants')
 const BadRequestError = require('../errors/badRequest_error');
 const createdSection = (req, res, next) => {
   const { title } = req.body;
@@ -22,6 +22,24 @@ const getSections = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+const deleteSection = (req, res, next) => {
+  Section.findById(req.params._id)
+    .then((section) => {
+      if (!section) {
+        throw new NotFoundError(SECTION_NOT_FOUND);
+      }
+      return section.deleteOne().then(() => res.send({ message: 'Раздел удален' }));
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError(BAD_REQUEST));
+      } else {
+        next(err);
+      }
+    });
+}
+
 module.exports = {
-  createdSection, getSections
+  createdSection, getSections, deleteSection
+
 }
