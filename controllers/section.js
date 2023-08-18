@@ -1,6 +1,7 @@
 const Section = require('../models/section')
 const { CREATED, SECTION_NOT_FOUND, BAD_REQUEST } = require('../utils/constants')
 const BadRequestError = require('../errors/badRequest_error');
+
 const createdSection = (req, res, next) => {
   const { title } = req.body;
 
