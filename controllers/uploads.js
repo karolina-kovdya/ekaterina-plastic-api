@@ -16,7 +16,7 @@ const { CREATED, SECTION_NOT_FOUND, BAD_REQUEST } = require('../utils/constants'
 
 const createImage = (req, res, next) => {
   const images = new Images({
-    imageSrc: req.file.path
+    src: req.file.path
   })
 
   images.save()
