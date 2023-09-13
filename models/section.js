@@ -6,6 +6,11 @@ const sectionSchema = new mongoose.Schema (
       type: String,
       required: true,
     },
+    file: [{
+      src: {
+        type: String
+      }
+    }]
   }
 )
 
