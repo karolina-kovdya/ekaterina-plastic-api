@@ -20,8 +20,9 @@ helmet({
 })
 
 app.use('/uploads', express.static('uploads'));
-app.use('/', userRoutes);
-app.use('/', sectionRoutes);
+app.use('/api', userRoutes);
+app.use('/api', sectionRoutes);
+app.use(express.static(path.join(__dirname, 'public'))); 
 app.use((req, res, next) => {
   next(new NotFoundError('Страница не найдена'));
 });
