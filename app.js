@@ -19,7 +19,7 @@ app.use(requestLogger);
 //   crossOriginResourcePolicy: false,
 // })
 
-app.use('api/uploads', express.static('uploads'));
+app.use('/uploads', express.static('uploads'));
 app.use('/api', userRoutes);
 app.use('/api', sectionRoutes);
 app.use((req, res, next) => {
