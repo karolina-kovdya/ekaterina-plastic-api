@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors')
-const helmet = require('helmet')
+const cors = require('./middlewares/cors');
+// const helmet = require('helmet')
 const userRoutes = require('./routes/user');
 const sectionRoutes = require('./routes/section');
 const NotFoundError = require('./errors/notFound_error');
@@ -9,15 +9,15 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
-app.use('*', cors());
+app.use(cors);
 
 const { PORT = 3001 } = process.env;
 
 app.use(express.json());
 app.use(requestLogger);
-helmet({
-  crossOriginResourcePolicy: false,
-})
+// helmet({
+//   crossOriginResourcePolicy: false,
+// })
 
 app.use('/uploads', express.static('uploads'));
 app.use('/api', userRoutes);
