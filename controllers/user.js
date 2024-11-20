@@ -7,28 +7,28 @@ const { BAD_REQUEST, CREATED, BAD_EMAIL_PASSWORD } = require('../utils/constants
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-const createUser = (req, res, next) => {
-  const {username, password} = req.body
+// const createUser = (req, res, next) => {
+//   const {username, password} = req.body
 
-  bcrypt.hash(password, 10)
-    .then((hash) => User.create({
-      username, password: hash,
-    })
-      .then((user) => res.status(CREATED).send({
-        _id: user._id,
-        user: user.username,
-      }))
-      .catch((err) => {
-        if (err.name === 'ValidationError') {
-          next(new BadRequestError(BAD_REQUEST));
-          return;
-        } if (err.code === 11000) {
-          next(new ConflictError(DUBLICATE));
-          return;
-        }
-        next(err);
-      }));
-};
+//   bcrypt.hash(password, 10)
+//     .then((hash) => User.create({
+//       username, password: hash,
+//     })
+//       .then((user) => res.status(CREATED).send({
+//         _id: user._id,
+//         user: user.username,
+//       }))
+//       .catch((err) => {
+//         if (err.name === 'ValidationError') {
+//           next(new BadRequestError(BAD_REQUEST));
+//           return;
+//         } if (err.code === 11000) {
+//           next(new ConflictError(DUBLICATE));
+//           return;
+//         }
+//         next(err);
+//       }));
+// };
 
 const loginUser = (req, res, next) => {
   const { username, password } = req.body;
@@ -57,7 +57,7 @@ const loginUser = (req, res, next) => {
 };
 
 module.exports = {
-  createUser,
+  // createUser,
   loginUser
 }
 
